@@ -33,22 +33,6 @@ namespace web
             host.Build().Run();
         }
 
-        //public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //  Host.CreateDefaultBuilder(args)
-        //      .ConfigureWebHostDefaults(webBuilder =>
-        //      {
-        //          webBuilder.ConfigureLogging(options =>
-        //          {
-        //              options.ClearProviders();
-        //              options.AddSerilog();
-        //          });
-        //          webBuilder.ConfigureKestrel(options =>
-        //          {
-        //              options.ListenAnyIP(5000);
-        //          });
-        //          webBuilder.UseStartup<Startup>();
-        //      });
-
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
 
@@ -61,7 +45,7 @@ namespace web
 
             }).ConfigureKestrel(options =>
             {
-                options.ListenAnyIP(5000);
+                options.ListenAnyIP(5001);
 
             }).UseContentRoot(appRoot)
             .UseStartup<Startup>();

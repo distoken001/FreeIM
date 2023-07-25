@@ -15,7 +15,11 @@ namespace imServer
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureKestrel(options =>
+                    {
+                        options.ListenAnyIP(6001);
+
+                    }).UseStartup<Startup>();
                 });
     }
 }
