@@ -74,6 +74,8 @@ namespace web
 
             app.UseDeveloperExceptionPage();
 
+            //跨域设置
+            app.UseCors("CorsPolicy");
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
