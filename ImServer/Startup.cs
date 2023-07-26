@@ -33,6 +33,17 @@ namespace imServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+             services
+            .AddCors(options =>
+             {
+                 options.AddPolicy("CorsPolicy", builder =>
+                 {
+                     builder.SetIsOriginAllowed((x) => true)
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+                 });
+             });
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -42,7 +53,8 @@ namespace imServer
             Console.InputEncoding = Encoding.GetEncoding("GB2312");
             
             app.UseDeveloperExceptionPage();
-
+            //跨域设置
+            app.UseCors("CorsPolicy");
             app.UseFreeImServer(new ImServerOptions
             {
                 Redis = new FreeRedis.RedisClient(Configuration["ImServerOption:RedisClient"]),
