@@ -17,7 +17,8 @@ namespace imServer
                 {
                     webBuilder.ConfigureKestrel(options =>
                     {
-                        options.ListenAnyIP(5002);
+                        options.ListenAnyIP(6001);
+
                     }).UseStartup<Startup>();
                 });
     }
