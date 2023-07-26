@@ -3,7 +3,7 @@
     "imServer": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:46765",
+      "applicationUrl": "http://localhost:37698",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
