@@ -58,7 +58,7 @@
                     var data = {};
                     //_self.id = localStorage.getItem('websocketid');
                     if (_self.id != '' && _self.id) data.websocketId = _self.id;
-                    ajax('/ws/pre-connect', data, function (d) {
+                    ajax('/api/ws/pre-connect', data, function (d) {
                         if (!(_self.id != '' && _self.id)) _self.id = d.websocketId; //localStorage.setItem('websocketid', _self.id = d.websocketId); //存储本地重复使用
                         var url = d.server;
                         if (gsocket) gsocket.close();
@@ -106,13 +106,13 @@
                 },
                 getChannels: function () {
                     var _self = this;
-                    ajax('/ws/get-channels', {}, function (rt) {
+                    ajax('/api/ws/get-channels', {}, function (rt) {
                         _self.channels = rt.channels;
                     });
                 },
                 joinChannel: function (chan) {
                     var _self = this;
-                    ajax('/ws/subscr-channel', { websocketid: _self.id, channel: chan }, function (rt) {
+                    ajax('/api/ws/subscr-channel', { websocketid: _self.id, channel: chan }, function (rt) {
                         _self.currentChannel.chan = chan;
                         _self.currentChannel.msgs.splice(0, _self.currentChannel.msgs.length);
                         _self.sendChannelMsg({ type: 'welcome' });
@@ -126,7 +126,7 @@
                     if (!this.currentChannel.chan) return alert('请加入一个聊天群');
                     var _self = this;
                     var data = { type: 'chanmsg', sender: _self.id, senderNick: _self.nick, chan: _self.currentChannel.chan, time: new Date().getTime(), msg: msg, };
-                    ajax('/ws/send-channelmsg', { websocketId: _self.id, channel: _self.currentChannel.chan, message: JSON.stringify(data) }, function (rt) {
+                    ajax('/api/ws/send-channelmsg', { websocketId: _self.id, channel: _self.currentChannel.chan, message: JSON.stringify(data) }, function (rt) {
 
                     });
                 },
