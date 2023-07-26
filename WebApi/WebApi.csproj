@@ -29,6 +29,8 @@
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
 		<PackageReference Include="Microsoft.OpenApi" Version="1.6.6" />
 		<PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+		<PackageReference Include="Com.Ctrip.Framework.Apollo" Version="2.10.0" />
+		<PackageReference Include="Com.Ctrip.Framework.Apollo.Configuration" Version="2.10.1" />
 	</ItemGroup>
 
 	<ItemGroup>

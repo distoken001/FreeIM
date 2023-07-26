@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Com.Ctrip.Framework.Apollo;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
@@ -13,12 +15,20 @@ namespace web
 
     public class Startup
     {
-
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostEnvironment env)
         {
             this.Configuration = configuration;
+            //输出debug日志在控制台，方便查找问题
+            Com.Ctrip.Framework.Apollo.Logging.LogManager.UseConsoleLogging(Com.Ctrip.Framework.Apollo.Logging.LogLevel.Debug);
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                .AddApollo(configuration.GetSection("apollo"))
+                .AddNamespace("backend.share")
+                .AddDefault();
+            Configuration = builder.Build();
         }
-
+        public static ServiceProvider privider;
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
@@ -52,6 +62,7 @@ namespace web
              {
                  options.IncludeXmlComments(System.IO.Path.Combine(Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath, "WebApi.xml"));
              });
+            privider = services.BuildServiceProvider();
 
         }
 
@@ -63,8 +74,6 @@ namespace web
 
             app.UseDeveloperExceptionPage();
 
-            app.UseRouting();
-            app.UseEndpoints(config => config.MapControllers());
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
@@ -86,11 +95,18 @@ namespace web
                 },
                 t => Console.WriteLine(t.clientId + "下线了"));
             //Swagger 配置
-            app.UseSwagger()
+            if (Configuration["Env"] == "dev" || Configuration["Env"] == "test")
+            {
+                app.UseSwagger()
             .UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "WebApi");
             });
+            }
+            //Swagger 配置
+            app.UseRouting();
+            app.UseEndpoints(routes => routes.MapControllers());
+
         }
     }
 }
