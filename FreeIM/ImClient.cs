@@ -58,7 +58,7 @@ public class ImClient
         var server = SelectServer(clientId);
         var token = $"{Guid.NewGuid()}{Guid.NewGuid()}{Guid.NewGuid()}{Guid.NewGuid()}".Replace("-", "");
         _redis.Set($"{_redisPrefix}Token{token}", JsonConvert.SerializeObject((clientId, clientMetaData)), 10);
-        return $"wss://{server}{_pathMatch}?token={token}";
+        return $"ws://{server}{_pathMatch}?token={token}";
     }
 
     /// <summary>
