@@ -2,7 +2,11 @@
   "profiles": {
     "imServer": {
       "commandName": "Project",
-      "commandLineArgs": "--urls=http://*:6001"
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:54647",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }

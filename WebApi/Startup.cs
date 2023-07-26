@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System;
 using System.Text;
@@ -38,6 +39,20 @@ namespace web
                 .AllowAnyMethod();
                  });
              });
+            //Swagger 配置
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Web API"
+                });
+            })
+             .ConfigureSwaggerGen(options =>
+             {
+                 options.IncludeXmlComments(System.IO.Path.Combine(Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationBasePath, "WebApi.xml"));
+             });
+
         }
 
         public void Configure(IApplicationBuilder app)
@@ -70,6 +85,12 @@ namespace web
                     ImHelper.SendMessage(t.clientId, onlineUids, $"用户{t.clientId}上线了");
                 },
                 t => Console.WriteLine(t.clientId + "下线了"));
+            //Swagger 配置
+            app.UseSwagger()
+            .UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/v1/swagger.json", "WebApi");
+            });
         }
     }
 }

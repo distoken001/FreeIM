@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace web.Controllers
 {
-    [Route("ws")]
+    [Route("api/ws")]
     public class WebSocketController : Controller
     {
-
         public string Ip => this.Request.Headers["X-Real-IP"].FirstOrDefault() ?? this.Request.HttpContext.Connection.RemoteIpAddress.ToString();
 
         /// <summary>
