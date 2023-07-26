@@ -46,8 +46,8 @@ namespace imServer
             app.UseFreeImServer(new ImServerOptions
             {
                 Redis = new FreeRedis.RedisClient(Configuration["ImServerOption:RedisClient"]),
-                Servers = Configuration["ImServerOption:Servers"].Split(";"),
-                Server = Configuration["ImServerOption:Server"]
+                Servers = new[] { "127.0.0.1:6001" },
+                Server = "127.0.0.1:6001"
             });
         }
     }
