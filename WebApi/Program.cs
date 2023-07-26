@@ -16,7 +16,7 @@ namespace web
     {
         public static void Main(string[] args)
         {
-            Console.Title = "deMarketService";
+            Console.Title = "WebApi";
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -24,7 +24,7 @@ namespace web
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File($"logs/deMarketService_{DateTime.Now.ToString("yyMMddHHmm")}.log")
+                .WriteTo.File($"logs/WebApi_{DateTime.Now.ToString("yyMMddHHmm")}.log")
                 //.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Literate)
                 .CreateLogger();
 
